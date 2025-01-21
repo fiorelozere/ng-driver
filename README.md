@@ -2,7 +2,7 @@
 # **ng-driver**
 
 An Angular wrapper for [Driver.js](https://github.com/kamranahmedse/driver.js), `ng-driver` makes it easy to integrate guided tours and feature highlights into Angular applications. This library provides an Angular-friendly interface to the Driver.js library.
-This library its still on early development and its not suggested to be used on production yet.
+This library is still on early development and its not suggested to be used on production yet.
 
 ---
 
