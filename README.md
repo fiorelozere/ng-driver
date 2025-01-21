@@ -1,59 +1,134 @@
-# NgDriver
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.2.
+# **ng-driver**
 
-## Development server
+An Angular wrapper for [Driver.js](https://github.com/kamranahmedse/driver.js), `ng-driver` makes it easy to integrate guided tours and feature highlights into Angular applications. This library provides an Angular-friendly interface to the Driver.js library.
+This library its still on early development and its not suggested to be used on production yet.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## **Installation**
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Install the library and its dependency:
 
 ```bash
-ng generate component component-name
+npm install ng-driver
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+---
 
-```bash
-ng generate --help
+## **Usage**
+
+### **1. Import `NgDriver` Service**
+
+In your Angular application, inject the `NgDriver` service into your components or services.
+
+#### Example:
+
+```typescript
+
+@Component({
+  selector: 'app-root',
+  imports: [ RouterOutlet ],
+  templateUrl: `
+    <div class="tour-container">
+          <h1>Ng-Driver Demo</h1>
+          <button (click)="startTour()">Start Tour</button>
+          <div id="step1">This is Step 1: Welcome!</div>
+          <div id="step2">Step 2: Learn more about ngx-driver.</div>
+          <div id="step3">Step 3: You're ready to go!</div>
+    </div>
+  `,
+  providers: [
+    provideNgDriver({ animate: true }) ]
+})
+export class AppComponent {
+  ngDriver = inject(NgDriver)
+
+  steps = [
+    { element: '#step1', popover: { title: 'Step 1', description: 'This is Step 1' } },
+    { element: '#step2', popover: { title: 'Step 2', description: 'This is Step 2' } },
+    { element: '#step3', popover: { title: 'Step 3', description: 'This is Step 3' } },
+  ]
+
+  startTour() {
+    this.ngDriver.setSteps(this.steps);
+    this.ngDriver.drive()
+  }
+}
 ```
 
-## Building
+---
 
-To build the project run:
+### **2. Provide Configuration**
 
-```bash
-ng build
+You can provide `NgDriver` by using `provideNgDriver` in your component or module:
+
+#### Example:
+
+```typescript
+@Component ({
+  providers: [
+    provideNgDriver({
+      animate: true,
+      opacity: 0.75,
+    }),
+  ],
+})
+export class AppComponent {}
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+## **Methods**
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Core Methods
 
-```bash
-ng test
+| **Method**         | **Description**                                                                                   |
+|---------------------|---------------------------------------------------------------------------------------------------|
+| `initialize(config)`| Initializes the Driver.js instance with a given configuration.                                    |
+| `setSteps(steps)`   | Defines the steps for the guided tour.                                                            |
+| `drive(index?)`     | Starts the tour, optionally from a specific step index.                                           |
+| `highlight(step)`   | Highlights a specific step in the tour.                                                          |
+| `refresh()`         | Refreshes the DOM state for Driver.js (useful if elements are dynamically updated).               |
+| `destroy()`         | Destroys the Driver.js instance, removing overlays and resetting the state.                       |
+
+### Query and State Methods
+
+| **Method**          | **Description**                                                                                   |
+|----------------------|---------------------------------------------------------------------------------------------------|
+| `isActive()`         | Checks if a tour is currently active.                                                            |
+| `getActiveStep()`    | Retrieves the currently active step.                                                             |
+| `getActiveElement()` | Retrieves the currently highlighted DOM element.                                                 |
+| `moveNext()`         | Moves to the next step in the tour.                                                              |
+| `movePrevious()`     | Moves to the previous step in the tour.                                                          |
+
+---
+
+## **Configuration**
+
+`ng-driver` accepts the same configuration options as Driver.js. Example:
+
+```typescript
+provideNgDriver({
+  animate: true, // Animate step transitions
+  opacity: 0.75, // Background opacity
+  keyboardControl: true, // Enable keyboard navigation
+  overlayClickNext: true, // Click on overlay to go to the next step
+});
 ```
 
-## Running end-to-end tests
+For a full list of configuration options, refer to the [Driver.js documentation](https://github.com/kamranahmedse/driver.js).
 
-For end-to-end (e2e) testing, run:
+---
 
-```bash
-ng e2e
-```
+## **Contributing**
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Contributions are welcome! To report bugs or request features, please open an issue on the GitHub repository:
 
-## Additional Resources
+👉 [https://github.com/fiorelozere/ng-driver](https://github.com/fiorelozere/ng-driver)
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+## **License**
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
