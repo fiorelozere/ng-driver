@@ -7,7 +7,7 @@ import {NG_DRIVER_CONFIG} from './ng-driver-config.token';
  * A wrapper for the Driver.js library that provides guided tours and feature highlights for Angular applications.
  * This service allows seamless integration of Driver.js with Angular dependency injection system.
  */
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class NgDriver {
   private driver!: Driver;
 
